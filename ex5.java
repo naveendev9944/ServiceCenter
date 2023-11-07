@@ -54,7 +54,7 @@ class ServiceLine extends Thread {
             		} 
             		else {
                 		try {
-                	    		Thread.sleep(1000); 
+                	    		Thread.sleep(10); 
                 		} catch (InterruptedException e) {
                 	    		e.printStackTrace();
                 		}
@@ -68,11 +68,12 @@ class ex5 {
         	// Create a service center
         	ServiceCenter servicecenter = new ServiceCenter();
 		servicecenter.createServiceLine();
+		int i;
         	for(int j=0;j<10;j++){
-			int i=(int)Math.random()*1000;
-        		Car car = new Car(j);
+			i=(int)(Math.random()*10000);
+        		Car car = new Car(i);
         	   	servicecenter.serviceCar(car);
-        		System.out.println("Car " + j + " has arrived at the service center.");
+        		System.out.println("Car " + i + " has arrived at the service center.");
         	}
     	}
 }
