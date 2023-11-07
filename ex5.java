@@ -68,24 +68,31 @@ class ServiceLine extends Thread {
     	}
 }
 
-class ex5 extends Thread{
+class ex5{
     	public static void main(String[] args){
         	// Create a service center
         	Scanner sc =new Scanner(System.in);
         	ServiceCenter servicecenter = new ServiceCenter();
         	System.out.println("Enter the no of service line");
-		servicecenter.createServiceLine(sc.nextByte());
+        	byte n=sc.nextByte();
+		servicecenter.createServiceLine(n);
 		int i;
-        	for(int j=0;j<10;j++){      
+		 for (int j = 1; j <= n; j++) {
+            		i=(int)(Math.random()*10000);
+        		Car car = new Car(i);
+        	   	servicecenter.serviceCar(car);
+        		System.out.println("Car " + i + " has arrived at the service center.");
+        	}
+		while(true){     
 			i=(int)(Math.random()*10000);
         		Car car = new Car(i);
         	   	servicecenter.serviceCar(car);
         		System.out.println("Car " + i + " has arrived at the service center.");
-        		try {
-                	    		Thread.sleep(100); 
-                		} catch (InterruptedException e) {
-                	    		e.printStackTrace();
-                		}
+        		
+			i=sc.nextInt();
+			if(i!=1)
+				break;
+        	
         	}
     	}
 }
