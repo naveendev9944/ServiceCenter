@@ -1,10 +1,13 @@
 import java.util.*;
-
+import java.lang.Math;
 class Car {
-    
+	int carno;
+	Car(int carno){
+		this.carno=carno;
+	}
     	public void service() {
-        
-    }
+        	System.out.println("Car "+this.carno+"  Serviced Successfully");
+    	}
 }
 
 class ParkingLot {
@@ -65,11 +68,11 @@ class ex5 {
         	// Create a service center
         	ServiceCenter servicecenter = new ServiceCenter();
 		servicecenter.createServiceLine();
-        	// Simulate cars arriving at the service center
-        	for (int i = 1; i <= 10; i++) {
-        	    Car car = new Car();
-        	    servicecenter.serviceCar(car);
-        	    System.out.println("Car " + i + " has arrived at the service center.");
+        	for(int j=0;j<10;j++){
+			int i=(int)Math.random()*1000;
+        		Car car = new Car(j);
+        	   	servicecenter.serviceCar(car);
+        		System.out.println("Car " + j + " has arrived at the service center.");
         	}
     	}
 }
