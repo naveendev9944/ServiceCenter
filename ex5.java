@@ -25,8 +25,8 @@ class ParkingLot {
 class ServiceCenter {
     	private ParkingLot parkingLot = new ParkingLot();
 
-    	public void createServiceLine(){
-        	for (int i = 0; i < 3; i++) {
+    	public void createServiceLine(byte n){
+        	for (byte i = 0; i < n; i++) {
         	    ServiceLine serviceLine = new ServiceLine(parkingLot);
         	    serviceLine.start();
         	}
@@ -68,17 +68,24 @@ class ServiceLine extends Thread {
     	}
 }
 
-class ex5 {
-    	public static void main(String[] args) {
+class ex5 extends Thread{
+    	public static void main(String[] args){
         	// Create a service center
+        	Scanner sc =new Scanner(System.in);
         	ServiceCenter servicecenter = new ServiceCenter();
-		servicecenter.createServiceLine();
+        	System.out.println("Enter the no of service line");
+		servicecenter.createServiceLine(sc.nextByte());
 		int i;
-        	for(int j=0;j<10;j++){
+        	for(int j=0;j<10;j++){      
 			i=(int)(Math.random()*10000);
         		Car car = new Car(i);
         	   	servicecenter.serviceCar(car);
         		System.out.println("Car " + i + " has arrived at the service center.");
+        		try {
+                	    		Thread.sleep(100); 
+                		} catch (InterruptedException e) {
+                	    		e.printStackTrace();
+                		}
         	}
     	}
 }
