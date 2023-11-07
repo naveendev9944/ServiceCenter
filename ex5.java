@@ -51,10 +51,15 @@ class ServiceLine extends Thread {
             		Car car = parkingLot.unpark();
             		if (car != null) {
                 		car.service();
+				try {
+                	    		Thread.sleep(10000); 
+                		} catch (InterruptedException e) {
+                	    		e.printStackTrace();
+                		}
             		} 
             		else {
                 		try {
-                	    		Thread.sleep(10); 
+                	    		Thread.sleep(100); 
                 		} catch (InterruptedException e) {
                 	    		e.printStackTrace();
                 		}
