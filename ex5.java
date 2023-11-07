@@ -52,14 +52,14 @@ class ServiceLine extends Thread {
             		if (car != null) {
                 		car.service();
 				try {
-                	    		Thread.sleep(10000); 
+                	    		Thread.sleep(1000); 
                 		} catch (InterruptedException e) {
                 	    		e.printStackTrace();
                 		}
             		} 
             		else {
                 		try {
-                	    		Thread.sleep(100); 
+                	    		Thread.sleep(10000); 
                 		} catch (InterruptedException e) {
                 	    		e.printStackTrace();
                 		}
@@ -70,7 +70,6 @@ class ServiceLine extends Thread {
 
 class ex5{
     	public static void main(String[] args){
-        	// Create a service center
         	Scanner sc =new Scanner(System.in);
         	ServiceCenter servicecenter = new ServiceCenter();
         	System.out.println("Enter the no of service line");
@@ -83,6 +82,9 @@ class ex5{
         	   	servicecenter.serviceCar(car);
         		System.out.println("Car " + i + " has arrived at the service center.");
         	}
+		System.out.println("\n\t\t\t\tNOTE");
+        	System.out.println("\n**************************************************************** Always press 1 to add a car **************************************************************\n");
+        	System.out.println("*****************************************************************  Press 0 to exit  ***************************************************************\n\n");
 		while(true){     
 			i=(int)(Math.random()*10000);
         		Car car = new Car(i);
