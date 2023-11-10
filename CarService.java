@@ -5,8 +5,8 @@ class Car {
 	Car(int carno){
 		this.carno=carno;
 	}
-    	public void service() {
-        	System.out.println("Car "+this.carno+"  Serviced Successfully");
+    	public void service(String threadno) {
+        	System.out.println("\nCar "+this.carno+"  Serviced Successfully by Thread "+threadno);
     	}
 }
 
@@ -17,7 +17,14 @@ class ParkingLot {
         	carQueue.add(car);
     	}
 
-    	public Car unpark() {
+    	public synchronized Car unpark() {
+            	try {
+            		while(carQueue.size()==0)
+            	        Thread.sleep(10000);
+	
+        		} catch (InterruptedException e) {
+        			e.printStackTrace();
+    			}
         	return carQueue.poll();
     	}
 }
@@ -33,42 +40,36 @@ class ServiceCenter {
     	}
     
 
-    	public void serviceCar(Car car) {
+    	public void addCar(Car car) {
         	parkingLot.parkCar(car);
     	}
 }
 
 class ServiceLine extends Thread {
     	private ParkingLot parkingLot;
-
+    	static byte no=1;
     	public ServiceLine(ParkingLot parkingLot) {
         	this.parkingLot = parkingLot;
     	}
 
     	@Override
     	public void run() {
+    		this.setName(""+no++);
         	while (true) {
             		Car car = parkingLot.unpark();
-            		if (car != null) {
-                		car.service();
-				try {
-                	    		Thread.sleep(1000); 
-                		} catch (InterruptedException e) {
-                	    		e.printStackTrace();
-                		}
-            		} 
-            		else {
-                		try {
-                	    		Thread.sleep(10000); 
-                		} catch (InterruptedException e) {
-                	    		e.printStackTrace();
-                		}
-            		}
+            		
+                	car.service(this.getName());
+			try {
+              	    		Thread.sleep(1000); 
+               		} catch (InterruptedException e) {
+               	    		e.printStackTrace();
+               		}
+            		 
+            		
         	}
     	}
 }
-
-class ex5{
+class CarService{
     	public static void main(String[] args){
         	Scanner sc =new Scanner(System.in);
         	ServiceCenter servicecenter = new ServiceCenter();
@@ -79,8 +80,8 @@ class ex5{
 		 for (int j = 1; j <= n; j++) {
             		i=(int)(Math.random()*10000);
         		Car car = new Car(i);
-        	   	servicecenter.serviceCar(car);
-        		System.out.println("Car " + i + " has arrived at the service center.");
+        	   	servicecenter.addCar(car);
+        		System.out.println("\n\t\t\tCar " + i + " has arrived at the service center.");
         	}
 		System.out.println("\n\t\t\t\tNOTE");
         	System.out.println("\n**************************************************************** Always press 1 to add a car **************************************************************\n");
@@ -88,12 +89,16 @@ class ex5{
 		while(true){     
 			i=(int)(Math.random()*10000);
         		Car car = new Car(i);
-        	   	servicecenter.serviceCar(car);
-        		System.out.println("Car " + i + " has arrived at the service center.");
+        	   	servicecenter.addCar(car);
+        		System.out.println("\n\t\t\tCar " + i + " has arrived at the service center.");
         		
 			i=sc.nextInt();
-			if(i!=1)
-				break;
+			if(i==0)
+				System.exit(0);
+			else if(i==1)
+				continue;
+			
+			System.out.println("Wrong input Read the note carefully give 0 or 1");
         	
         	}
     	}
